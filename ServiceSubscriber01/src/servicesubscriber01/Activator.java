@@ -12,39 +12,13 @@ public class Activator implements BundleActivator {
 	// private static BundleContext context;
 
 	private BundleContext m_context = null;
-	// private ServiceTracker DRT_tracker = null;
-//	private ServiceTracker TEMP_tracker = null;
-//	private ServiceTracker MASS_tracker = null;
+
 	private ServiceTracker LENGTH_tracker = null;
 
-//	static BundleContext getContext() {
-//		return context;
-//	}
 
 	public void start(BundleContext bundleContext) throws Exception {
+
 		// Activator.context = bundleContext;
-
-		// get DRT_tracker Object
-//		DRT_tracker = new ServiceTracker(context,
-//				context.createFilter("(&(objectClass=" + DataRateService.class.getName() + ")" + "(Language=*))"),
-//				null);
-//		DRT_tracker.open();
-//
-//		// get TEMP_tracker Object
-//		TEMP_tracker = new ServiceTracker(context,
-//				context.createFilter("(&(objectClass=" + Temperature.class.getName() + ")" + "(Language=*))"), null);
-//		DRT_tracker.open();
-//
-//		// get MASS_tracker Object
-//		MASS_tracker = new ServiceTracker(context,
-//				context.createFilter("(&(objectClass=" + Mass.class.getName() + ")" + "(Language=*))"), null);
-//		DRT_tracker.open();
-
-		// get LENGTH_tracker Object
-//		LENGTH_tracker = new ServiceTracker(context,
-//				context.createFilter("(&(objectClass=" + Length.class.getName() + ")" + "(Language=*))"), null);
-//		LENGTH_tracker.open();
-
 		m_context = bundleContext;
 
 		// Create a service tracker to monitor dictionary services.
