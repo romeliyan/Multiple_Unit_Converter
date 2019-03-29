@@ -1,5 +1,5 @@
 package massprovider;
 
-public class MassImplementation {
+public class MassImplementation implements Mass{
 
 }
