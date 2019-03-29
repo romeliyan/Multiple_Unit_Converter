@@ -15,11 +15,16 @@ public class Activator implements BundleActivator {
 
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
-		System.out.println("Temperature provider ");
+		System.out.println("Temperature provider started");
+		Temperature temperatureService = new TemperatureImp();
+		serviceRegistration = context.registerService(Temperature.class.getName(),  temperatureService, null);
+		
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
 		Activator.context = null;
+		System.out.println("Temperature provider stopped");
+		serviceRegistration.unregister();
 	}
 
 }
