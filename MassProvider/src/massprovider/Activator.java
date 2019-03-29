@@ -23,7 +23,7 @@ public class Activator implements BundleActivator {
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+		Activator.context = bundleContext;
 		System.out.println("Mass provider stopped");
 		serviceRegistration.unregister();
 	}
