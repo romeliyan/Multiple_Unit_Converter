@@ -27,7 +27,7 @@ public class Activator implements BundleActivator {
 	}
 
 	public void stop(BundleContext bundleContext) throws Exception {
-		Activator.context = null;
+		Activator.context = bundleContext;
 		System.out.println("Data rate provider stopped");
 		serviceRegistration.unregister();
 	}

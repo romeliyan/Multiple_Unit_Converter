@@ -1,61 +1,48 @@
 package servicesubscriber01;
 
-import datatransferrateprovider.DataRateService;
+import datatransferrateprovider.DataRateImpl;
 import lengthprovider.Length;
 import massprovider.Mass;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.framework.ServiceReference;
 import temperatureprovider.Temperature;
 
 public class Activator implements BundleActivator {
 
-	// private static BundleContext context;
+	private static BundleContext context;
+	ServiceReference TemperatureReference;
+	ServiceReference MassReference;
+	ServiceReference LengthReference;
+	ServiceReference DTRReference;
 
-	private BundleContext context = null;
-	private ServiceTracker DRT_tracker = null;
-	private ServiceTracker TEMP_tracker = null;
-	private ServiceTracker MASS_tracker = null;
-	private ServiceTracker LENGTH_tracker = null;
-
-//	static BundleContext getContext() {
-//		return context;
-//	}
+	static BundleContext getContext() {
+		return context;
+	}
 
 	public void start(BundleContext bundleContext) throws Exception {
-		// Activator.context = bundleContext;
-
-		context = bundleContext;
-
-		// get DRT_tracker Object
-		DRT_tracker = new ServiceTracker(context,
-				context.createFilter("(&(objectClass=" + DataRateService.class.getName() + ")" + "(Language=*))"),
-				null);
-		DRT_tracker.open();
-
-		// get TEMP_tracker Object
-		TEMP_tracker = new ServiceTracker(context,
-				context.createFilter("(&(objectClass=" + Temperature.class.getName() + ")" + "(Language=*))"), null);
-		DRT_tracker.open();
-
-		// get MASS_tracker Object
-		MASS_tracker = new ServiceTracker(context,
-				context.createFilter("(&(objectClass=" + Mass.class.getName() + ")" + "(Language=*))"), null);
-		DRT_tracker.open();
-
-		// get LENGTH_tracker Object
-		LENGTH_tracker = new ServiceTracker(context,
-				context.createFilter("(&(objectClass=" + Length.class.getName() + ")" + "(Language=*))"), null);
-		DRT_tracker.open();
+		Activator.context = bundleContext;
 		
+		System.out.println("Start Subscriber Service");
+		
+		TemperatureReference = context.getServiceReference(Temperature.class.getName());
+		Temperature temperature = (Temperature) context.getService(TemperatureReference);
+		
+		MassReference = context.getServiceReference(Mass.class.getName());
+		Mass mass = (Mass) context.getService(MassReference);
+		
+		LengthReference = context.getServiceReference(Length.class.getName());
+		Length length = (Length) context.getService(LengthReference);
+		
+		DTRReference = context.getServiceReference(DataRateImpl.class.getName());
+		DataRateImpl dataRate = (DataRateImpl) context.getService(DTRReference);
 		
 		//User interaction panel
-		 try {
+		try {
 			 
 			 
 			 System.out.println("------------------------------------------");
@@ -100,9 +87,6 @@ public class Activator implements BundleActivator {
 					
 				}
 				
-			
-				 
-				 
 				 
 			 }
 			 
@@ -111,18 +95,15 @@ public class Activator implements BundleActivator {
 			 e.printStackTrace();
 		 }
 		
-		
-		
-		
-		
-		
-
 	}
-	
-	
-
+		
 	public void stop(BundleContext bundleContext) throws Exception {
-		// Activator.context = null;
+		
+		context.ungetService(TemperatureReference);
+		context.ungetService(MassReference);
+		context.ungetService(DTRReference);
+		context.ungetService(LengthReference);
+		System.out.println("Serivce Stopped");
 	}
 
 }
